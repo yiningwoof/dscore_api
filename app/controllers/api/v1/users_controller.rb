@@ -15,13 +15,13 @@ class Api::V1::UsersController < ApplicationController
     if @user.id
       session[:user_id] = @user.id
       render json: {
-        status: created,
         id: @user.id,
+        name: @user.firstname,
         email: @user.email
-      }
+      }, status: :created
     else
       render json: {
-        status: 500
+        status: 401
       }
     end
   end

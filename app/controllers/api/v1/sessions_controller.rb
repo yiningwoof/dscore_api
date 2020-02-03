@@ -10,10 +10,9 @@ class Api::V1::SessionsController < ApplicationController
     if @user && @user.authenticate(params[:user][:password])
       session[:user_id] = @user.id
       render json: {
-      status: :created,
-      logged_in: true,
-      user: @user
-      }
+        logged_in: true,
+        user: @user
+      }, status: :created
       #  redirect_to attractions_path
     else
       render json: {status: 401}
@@ -31,11 +30,19 @@ class Api::V1::SessionsController < ApplicationController
       render json: {
         logged_in: false
       }
+<<<<<<< HEAD
+=======
+    end
+>>>>>>> 540555696a554e6872793ba2e16be70b5270b58c
   end
 
   def logout
     reset_session
     render json: {status: 200, logged_out: true}
+<<<<<<< HEAD
+=======
+  end
+>>>>>>> 540555696a554e6872793ba2e16be70b5270b58c
 
   def destroy
     # byebug
