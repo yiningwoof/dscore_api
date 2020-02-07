@@ -1,5 +1,5 @@
 class Api::V1::RoundsController < ApplicationController
-  before_action :set_round, only: [:show, :update, :destroy]
+  # before_action :set_round, only: [:show, :update, :destroy]
   def index
     @rounds = Round.all
     render json: @rounds
@@ -21,10 +21,10 @@ class Api::V1::RoundsController < ApplicationController
   def destroy
     @round.destroy
   end
-  def set_game
+  def set_round
     @round = Round.find(params[:id])
   end
   def round_params()
-    params.require(:round).permit(:user_id, :game_id)
+    params.require(:round).permit(:user_id, :game_id, :name)
   end
 end

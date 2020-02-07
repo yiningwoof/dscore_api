@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_174553) do
+ActiveRecord::Schema.define(version: 2020_02_06_212003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,12 +43,12 @@ ActiveRecord::Schema.define(version: 2020_01_31_174553) do
 
   create_table "scores", force: :cascade do |t|
     t.string "score"
-    t.bigint "round_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "hole_id", null: false
+    t.bigint "rounds_id"
     t.index ["hole_id"], name: "index_scores_on_hole_id"
-    t.index ["round_id"], name: "index_scores_on_round_id"
+    t.index ["rounds_id"], name: "index_scores_on_rounds_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -63,5 +63,5 @@ ActiveRecord::Schema.define(version: 2020_01_31_174553) do
   add_foreign_key "rounds", "games"
   add_foreign_key "rounds", "users"
   add_foreign_key "scores", "holes"
-  add_foreign_key "scores", "rounds"
+  add_foreign_key "scores", "rounds", column: "rounds_id"
 end
