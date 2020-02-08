@@ -9,6 +9,7 @@ class Api::V1::GamesController < ApplicationController
   end
   def create
     @game = Game.create(game_params)
+    session[:game_id] = @game.id
     render json: @game
   end
   def update

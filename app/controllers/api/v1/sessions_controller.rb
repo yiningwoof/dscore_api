@@ -9,6 +9,7 @@ class Api::V1::SessionsController < ApplicationController
     # byebug
     if @user && @user.authenticate(params[:user][:password])
       session[:user_id] = @user.id
+    
       render json: {
         logged_in: true,
         user: @user
@@ -21,7 +22,13 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def logged_in
-    if @current_user
+    if @current_user && @current_game
+      render json: {
+        logged_in: true,
+        game: @current_game,
+        user: @current_user
+      }
+    elsif @current_user && !@current_game
       render json: {
         logged_in: true,
         user: @current_user
