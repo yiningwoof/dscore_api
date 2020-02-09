@@ -64,7 +64,6 @@ class Api::V1::UsersController < ApplicationController
           email: user.email,
           session: session
         }
-        # byebug
     end
   end
 

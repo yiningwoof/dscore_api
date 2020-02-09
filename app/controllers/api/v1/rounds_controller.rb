@@ -1,5 +1,5 @@
 class Api::V1::RoundsController < ApplicationController
-  # before_action :set_round, only: [:show, :update, :destroy]
+  before_action :set_round, only: [:show, :update, :destroy]
   def index
     @rounds = Round.all
     render json: @rounds
@@ -9,6 +9,10 @@ class Api::V1::RoundsController < ApplicationController
   end
   def create
     @round = Round.create(round_params)
+    if session[:game]
+      session[:rounds]["#{@round.id}"] = @round
+    end
+    # byebug
     render json: @round
   end
   def update

@@ -9,6 +9,9 @@ class Api::V1::ScoresController < ApplicationController
   end
   def create
     @score = Score.create(score_params)
+    session[:scores] = {};
+    session[:scores]["#{@score.round_id}"] = {}
+    session[:scores]["#{@score.round_id}"]["#{@score.hole_id}"] = @score.score
     render json: @score
   end
   def update
