@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       # resources :users, only: [:show]
       resources :games
       resources :holes
-      resources :scores
+      get "scores/leaderboard", to: "scores#leaderboard_scores"
+      resources :scores, only: [:create]
       resources :rounds
       resources :sessions, only: [:create, :destroy]
       get "logged_in", to: "sessions#logged_in"

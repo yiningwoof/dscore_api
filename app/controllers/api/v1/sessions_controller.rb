@@ -32,7 +32,7 @@ class Api::V1::SessionsController < ApplicationController
         rounds: session[:rounds],
         scores: session[:scores]
       }
-    elsif @current_user && @current_game && session[:rounds] && session[:scores]
+    elsif @current_user && @current_game && session[:rounds]
       render json: {
         logged_in: true,
         game: @current_game,

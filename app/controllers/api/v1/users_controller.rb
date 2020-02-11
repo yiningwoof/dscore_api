@@ -3,11 +3,11 @@ class Api::V1::UsersController < ApplicationController
   
   def index
     @users = User.all
-    render json: @users
+    render json: @users.as_json(:only => [ :email, :firstname, :lastname ])
   end
   
   def show
-    render json: @user
+    render json: @user.as_json(:only => [ :email, :firstname, :lastname ])
   end
   
   def create
