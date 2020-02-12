@@ -7,17 +7,22 @@ class Api::V1::SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:user][:email])
     # byebug
-    if @user && @user.authenticate(params[:user][:password])
+    if !@user
+      render json: {
+        # message: "User account does not exist. Please create an account."
+      }, status: 404
+    elsif @user && @user.authenticate(params[:user][:password])
       session[:user_id] = @user.id
       # byebug
-    
       render json: {
         logged_in: true,
         user: @user
       }, status: :created
       #  redirect_to attractions_path
     else
-      render json: {status: 401}
+      render json: {
+      # message: "Incorrect password. Please try again."
+    }, status: 401
       #  redirect_to '/login'
     end
   end

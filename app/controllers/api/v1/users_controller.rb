@@ -21,8 +21,7 @@ class Api::V1::UsersController < ApplicationController
       }, status: :created
     else
       render json: {
-        status: 401
-      }
+      }, status: 401
     end
   end
 
@@ -43,29 +42,29 @@ class Api::V1::UsersController < ApplicationController
   end
 
   
-  def login
-    user = User.find_by(email: params['user']['email'])
-    isAuthed = user.try(:authenticate, params['user']['password'])
+  # def login
+  #   user = User.find_by(email: params['user']['email'])
+  #   isAuthed = user.try(:authenticate, params['user']['password'])
     
-    if !user
-      render json: {
-        key: 'email',
-        message: 'No user can be found with that Email'
-        }, status: :forbidden
-      elsif !isAuthed
-        render json: {
-          key: 'password',
-          message: 'Incorrect Password'
-          }, status: :forbidden
-      else
-        session[:user_id] = user.id
-        render json: {
-          id: user.id,
-          email: user.email,
-          session: session
-        }
-    end
-  end
+  #   if !user
+  #     render json: {
+  #       key: 'email',
+  #       message: 'No user can be found with that Email'
+  #       }, status: :forbidden
+  #     elsif !isAuthed
+  #       render json: {
+  #         key: 'password',
+  #         message: 'Incorrect Password'
+  #         }, status: :forbidden
+  #     else
+  #       session[:user_id] = user.id
+  #       render json: {
+  #         id: user.id,
+  #         email: user.email,
+  #         session: session
+  #       }
+  #   end
+  # end
 
       private
       def user_params
