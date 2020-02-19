@@ -27,7 +27,7 @@ class Api::V1::ScoresController < ApplicationController
 
   def leaderboard_scores
     completed_rounds = Round.all.select{|round| round.scores.length === 18}
-    rows = completed_rounds.map do |round|
+    rows = completed_rounds.each_with_index.map do |round, index|
     # byebug
       row = {}
       row[:name] = round.name
@@ -39,7 +39,13 @@ class Api::V1::ScoresController < ApplicationController
       # byebug
       row
     end
-    render json: rows
+    ranked_rows = rows.sort do |a, b|
+      a[:total] <=> b[:total]
+    end
+    ranked_rows.each_with_index do |ranked_row, index|
+      ranked_row[:rank] = index + 1
+    end
+    render json: ranked_rows
   end
 
   def set_score

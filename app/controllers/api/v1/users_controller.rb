@@ -11,17 +11,22 @@ class Api::V1::UsersController < ApplicationController
   end
   
   def create
-    @user = User.create(user_params)
-    if @user.id
-      session[:user_id] = @user.id
-      render json: {
-        id: @user.id,
-        name: @user.firstname,
-        email: @user.email
-      }, status: :created
-    else
+    @user = User.new(user_params)
+    if User.find_by(email: @user.email)
       render json: {
       }, status: 401
+    elsif @user.password != @user.password_confirmation
+      render json: {}, status: 400
+    else
+      @user.save
+      if @user.id
+        session[:user_id] = @user.id
+        render json: {
+          id: @user.id,
+          name: @user.firstname,
+          email: @user.email
+        }, status: :created
+      end
     end
   end
 
